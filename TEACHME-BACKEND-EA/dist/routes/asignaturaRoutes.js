@@ -28,14 +28,16 @@ const asignaturaController_1 = require("../controller/asignaturaController");
 const router = express.Router();
 ////////////////////////////////////POSTS/////////////////////////////////////
 router.post('/', asignaturaController_1.crearAsignatura);
-router.get('/paginacion', asignaturaController_1.obtenerAsignaturasPaginadas);
 ////////////////////////////////////GETS/////////////////////////////////////
+// Coloca la ruta `comentarios-ordenados` antes de las rutas dinámicas
+router.get('/comentarios-ordenados', asignaturaController_1.obtenerAsignaturasConComentariosOrdenados);
+router.get('/paginacion', asignaturaController_1.obtenerAsignaturasPaginadas);
 router.get('/', asignaturaController_1.listarAsignaturas);
 router.get('/:_id', asignaturaController_1.verAsignaturaPorId);
 router.get('/:nombre', asignaturaController_1.verAsignaturaPorNombre);
 ////////////////////////////////////PUTS/////////////////////////////////////
 router.put('/:nombre/usuario', asignaturaController_1.asignarUsuariosAAsignaturaPorNombre);
-router.put('/:_id/usuario ', asignaturaController_1.asignarUsuariosAAsignaturaPorId);
+router.put('/:_id/usuario', asignaturaController_1.asignarUsuariosAAsignaturaPorId);
 ////////////////////////////////////DELETES/////////////////////////////////////
 router.delete('/:_id', asignaturaController_1.eliminarAsignaturaPorId);
 router.delete('/:nombre', asignaturaController_1.eliminarAsignaturaPorNombre);

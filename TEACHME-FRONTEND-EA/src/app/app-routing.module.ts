@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CrudUsuariosComponent } from './crud-usuarios/crud-usuarios.component';
 import { CrudAsignaturasComponent } from './crud-asignaturas/crud-asignaturas.component';
 import { PopulateComponent } from './populate/populate.component';
+import { ComentariosComponent } from './comentarios/comentarios.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Ruta por defecto que redirige a Home
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'crud-usuarios', component: CrudUsuariosComponent },
   { path: 'crud-asignaturas', component: CrudAsignaturasComponent },
   { path: 'populate', component: PopulateComponent },
+  { path: 'comentarios', component: ComentariosComponent },
   { path: '**', redirectTo: '/home' } // Ruta para redirigir cualquier ruta desconocida a Home
 ];
 

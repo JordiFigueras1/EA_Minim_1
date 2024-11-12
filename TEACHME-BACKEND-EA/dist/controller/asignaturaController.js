@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerAsignaturasPaginadas = void 0;
+exports.obtenerAsignaturasConComentariosOrdenados = exports.obtenerAsignaturasPaginadas = void 0;
 exports.crearAsignatura = crearAsignatura;
 exports.listarAsignaturas = listarAsignaturas;
 exports.verAsignaturaPorId = verAsignaturaPorId;
@@ -169,4 +169,14 @@ const obtenerAsignaturasPaginadas = (req, res) => __awaiter(void 0, void 0, void
     }
 });
 exports.obtenerAsignaturasPaginadas = obtenerAsignaturasPaginadas;
+const obtenerAsignaturasConComentariosOrdenados = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const asignaturas = yield asignaturaService.obtenerAsignaturasConComentariosOrdenados();
+        res.status(200).json(asignaturas);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.obtenerAsignaturasConComentariosOrdenados = obtenerAsignaturasConComentariosOrdenados;
 //# sourceMappingURL=asignaturaController.js.map

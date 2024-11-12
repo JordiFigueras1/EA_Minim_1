@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerAsignaturasPaginadas = exports.eliminarAsignaturaPorNombre = exports.eliminarAsignaturaPorId = exports.asignarUsuariosAAsignaturaPorId = exports.asignarUsuariosAAsignaturaPorNombre = exports.verAsignaturaPorNombre = exports.verAsignaturaPorId = exports.listarAsignaturas = exports.modificarDescripcionAsignaturaPorId = exports.modificarNombreAsignaturaPorId = exports.crearAsignatura = void 0;
+exports.obtenerAsignaturasConComentariosOrdenados = exports.obtenerAsignaturasPaginadas = exports.eliminarAsignaturaPorNombre = exports.eliminarAsignaturaPorId = exports.asignarUsuariosAAsignaturaPorId = exports.asignarUsuariosAAsignaturaPorNombre = exports.verAsignaturaPorNombre = exports.verAsignaturaPorId = exports.listarAsignaturas = exports.modificarDescripcionAsignaturaPorId = exports.modificarNombreAsignaturaPorId = exports.crearAsignatura = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const asignatura_1 = __importDefault(require("../models/asignatura"));
 const usuario_1 = __importDefault(require("../models/usuario"));
@@ -107,4 +107,26 @@ const obtenerAsignaturasPaginadas = (page, limit) => __awaiter(void 0, void 0, v
     };
 });
 exports.obtenerAsignaturasPaginadas = obtenerAsignaturasPaginadas;
+const obtenerAsignaturasConComentariosOrdenados = () => __awaiter(void 0, void 0, void 0, function* () {
+    const asignaturas = yield asignatura_1.default.aggregate([
+        {
+            $lookup: {
+                from: 'comentarios', // Nombre de la colección de comentarios en MongoDB
+                localField: '_id',
+                foreignField: 'asignatura',
+                as: 'comentarios'
+            }
+        },
+        {
+            $addFields: {
+                numeroComentarios: { $size: '$comentarios' }
+            }
+        },
+        {
+            $sort: { numeroComentarios: -1 }
+        }
+    ]);
+    return asignaturas;
+});
+exports.obtenerAsignaturasConComentariosOrdenados = obtenerAsignaturasConComentariosOrdenados;
 //# sourceMappingURL=asignaturaService.js.map

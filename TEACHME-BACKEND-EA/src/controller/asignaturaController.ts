@@ -110,3 +110,12 @@ export const obtenerAsignaturasPaginadas = async (req: Request, res: Response) =
     res.status(500).json({ error: error.message });
   }
 };
+
+export const obtenerAsignaturasConComentariosOrdenados = async (req: Request, res: Response) => {
+  try {
+    const asignaturas = await asignaturaService.obtenerAsignaturasConComentariosOrdenados();
+    res.status(200).json(asignaturas);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};

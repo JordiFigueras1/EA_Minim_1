@@ -8,27 +8,29 @@ import {
     eliminarAsignaturaPorNombre,
     asignarUsuariosAAsignaturaPorId,
     asignarUsuariosAAsignaturaPorNombre,
-    obtenerAsignaturasPaginadas
-
-  
+    obtenerAsignaturasPaginadas,
+    obtenerAsignaturasConComentariosOrdenados // Asegúrate de importar esta función
 } from '../controller/asignaturaController';
 
 const router = express.Router();
 
 ////////////////////////////////////POSTS/////////////////////////////////////
 router.post('/', crearAsignatura);
-router.get('/paginacion', obtenerAsignaturasPaginadas);
 
 ////////////////////////////////////GETS/////////////////////////////////////
+// Coloca la ruta `comentarios-ordenados` antes de las rutas dinámicas
+router.get('/comentarios-ordenados', obtenerAsignaturasConComentariosOrdenados);
+router.get('/paginacion', obtenerAsignaturasPaginadas);
 router.get('/', listarAsignaturas);
 router.get('/:_id', verAsignaturaPorId);
 router.get('/:nombre', verAsignaturaPorNombre);
+
 ////////////////////////////////////PUTS/////////////////////////////////////
 router.put('/:nombre/usuario', asignarUsuariosAAsignaturaPorNombre);
-router.put('/:_id/usuario ', asignarUsuariosAAsignaturaPorId);
+router.put('/:_id/usuario', asignarUsuariosAAsignaturaPorId);
+
 ////////////////////////////////////DELETES/////////////////////////////////////
 router.delete('/:_id', eliminarAsignaturaPorId);
 router.delete('/:nombre', eliminarAsignaturaPorNombre);
-
 
 export default router;

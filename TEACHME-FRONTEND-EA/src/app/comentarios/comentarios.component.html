@@ -1,0 +1,29 @@
+<div class="comentarios-container">
+  <h2>Comentarios por Asignatura</h2>
+
+  <!-- Lista de asignaturas con comentarios -->
+  <div *ngFor="let asignatura of asignaturas">
+    <h3>{{ asignatura.nombre }} ({{ asignatura.descripcion }})</h3>
+
+    <div class="nuevo-comentario">
+      <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario aquí"></textarea>
+      <button 
+        *ngIf="asignatura._id" 
+        (click)="agregarComentario(asignatura._id!)" 
+        [disabled]="!nuevoComentario.trim()">
+        Añadir Comentario
+      </button>
+    </div>
+
+    <!-- Lista de comentarios para la asignatura actual -->
+<!-- Lista de comentarios para la asignatura actual -->
+<ul class="lista-comentarios">
+  <li *ngFor="let comentario of asignatura.comentarios">
+    <p><strong>Autor:</strong> {{ getAutorNombre(comentario.autor) }}</p>
+    <p><strong>Comentario:</strong> {{ comentario.contenido }}</p>
+    <button *ngIf="comentario._id" (click)="eliminarComentario(comentario._id!)">Eliminar</button>
+  </li>
+</ul>
+
+  </div>
+</div>

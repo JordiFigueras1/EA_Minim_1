@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Asignatura from '../models/asignatura';
 import Usuario from '../models/usuario';
-
+import Comentario from '../models/comentario';
 /////////////////////////////////////CREAR NUEVA ASIGNATURA//////////////////////////////////////////
 export const crearAsignatura = async (nombre: string, descripcion: string) => {
   const asignatura = new Asignatura({nombre, descripcion });
@@ -102,5 +102,27 @@ export const obtenerAsignaturasPaginadas = async (page: number, limit: number) =
     totalPages: Math.ceil(total / limit),
     asignaturas,
   };
+};
+
+export const obtenerAsignaturasConComentariosOrdenados = async () => {
+  const asignaturas = await Asignatura.aggregate([
+    {
+      $lookup: {
+        from: 'comentarios', // Nombre de la colección de comentarios en MongoDB
+        localField: '_id',
+        foreignField: 'asignatura',
+        as: 'comentarios'
+      }
+    },
+    {
+      $addFields: {
+        numeroComentarios: { $size: '$comentarios' }
+      }
+    },
+    {
+      $sort: { numeroComentarios: -1 }
+    }
+  ]);
+  return asignaturas;
 };
 

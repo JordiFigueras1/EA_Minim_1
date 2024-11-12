@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from './models/usuario.model';
 import { Asignatura } from './models/asignatura.model';
+import { Comentario } from './models/comentario.model'; // Importa el modelo Comentario
 
 @Injectable({
   providedIn: 'root'
@@ -86,4 +87,25 @@ export class ApiService {
   desasignarAsignatura(usuarioId: string, asignaturaId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}usuarios/${usuarioId}/asignaturas/${asignaturaId}`);
   }
+
+  // Obtener comentarios de una asignatura
+  getComentariosPorAsignatura(asignaturaId: string): Observable<Comentario[]> {
+    return this.http.get<Comentario[]>(`${this.apiUrl}asignaturas/${asignaturaId}/comentarios`);
+  }
+
+// api.service.ts
+crearComentario(comentario: Comentario): Observable<Comentario> {
+  return this.http.post<Comentario>(`${this.apiUrl}comentarios`, comentario);
 }
+
+
+  // Eliminar comentario
+  eliminarComentario(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}comentarios/${id}`);
+  }
+
+  getAsignaturasOrdenadasPorComentarios(): Observable<Asignatura[]> {
+    return this.http.get<Asignatura[]>(`${this.apiUrl}asignaturas/comentarios-ordenados`);
+  }
+}
+
